@@ -8,7 +8,11 @@ LOG_DIR = '/data/log/zeus/app/'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
     'formatters': {
         'verbose': {
             'format': '%(asctime)s %(levelname)s %(module)s.%(funcName)s Line:%(lineno)d  %(message)s'
@@ -31,13 +35,6 @@ LOGGING = {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(LOG_DIR, 'filelog.log'),
-            'formatter': 'verbose',
-        },
-
-        'default_err': {
-            'level': 'ERROR',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(LOG_DIR, 'error_logger.log'),
             'formatter': 'verbose',
         },
         'exception_logger': {
@@ -96,8 +93,8 @@ LOGGING = {
             'level': 'INFO',
         },
         'django.request': {
-            'handlers': ['default_err'],
-            'level': 'ERROR',
+            'handlers': ['default'],
+            'level': 'INFO',
             'propagate': False,
         },
         'exception_logger': {
@@ -114,11 +111,6 @@ LOGGING = {
             'handlers': ['auth_logger'],
             'level': 'INFO',
             'propagate': False,
-        },
-        'err_logger': {
-            "handlers": ['default_err'],
-            'level': "ERROR",
-            "propagate": False,
         },
         'django.db.backends': {
             'level': 'DEBUG',

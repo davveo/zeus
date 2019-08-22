@@ -6,14 +6,13 @@
 import time
 import json
 import datetime
-
-from apps.users.tasks import operation_log_record, exception_log_record
+from django.utils.deprecation import MiddlewareMixin
+from apps.logs.tasks import operation_log_record, exception_log_record
 from libs.exception_info import get_exception_info, get_func_args
 
 
-class LoggingMiddleware(object):
     # 操作记录拦截
-    class LoggingMiddleware(object):
+class LoggingMiddleware(MiddlewareMixin):
 
         def process_request(self, request):
             request.start_time = time.time()
@@ -53,7 +52,6 @@ class LoggingMiddleware(object):
 
             }
             operation_log_record.delay(record_data)
-
             return response
 
         def process_exception(self, request, exception):
@@ -76,7 +74,7 @@ class LoggingMiddleware(object):
                 )
 
             exception_log_record.delay(exception_data)
-
+            return
 
 
 
