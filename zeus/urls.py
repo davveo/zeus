@@ -1,4 +1,4 @@
-"""gistandard URL Configuration
+"""zeus URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.views.static import serve
-from gistandard.settings import MEDIA_ROOT
+from zeus.settings import MEDIA_ROOT
 
 import xadmin
 

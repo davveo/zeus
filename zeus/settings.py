@@ -38,12 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'apps.logs.apps.LogConfig',
     'apps.users.apps.UsersConfig',
     'apps.rbac.apps.RbacConfig',
     'apps.system.apps.SystemConfig',
     'apps.adm.apps.AdmConfig',
     'apps.personal.apps.PersonalConfig',
-    "apps.tasks"
     'xadmin',
     'crispy_forms',
 ]
@@ -62,11 +62,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'apps.users.middleware.MenuMiddleware',
-    'apps.rbac.middleware.RbacMiddleware',
+    'middlewares.menu.MenuMiddleware',
+    'middlewares.rbac.RbacMiddleware',
+    'middlewares.logm.RbacMiddleware',
 ]
 
-ROOT_URLCONF = 'gistandard.urls'
+ROOT_URLCONF = 'zeus.urls'
 
 TEMPLATES = [
     {
@@ -85,7 +86,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'gistandard.wsgi.application'
+WSGI_APPLICATION = 'zeus.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases

@@ -22,10 +22,6 @@ LOGGING = {
     },
 
     'handlers': {
-        'null': {
-            'level': 'DEBUG',
-            'class': 'django.utils.log.NullHandler',
-        },
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
@@ -138,11 +134,6 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
-        'user_logger': {
-             'handlers': ['user_handler'],
-             'propagate': False,
-             'level': 'INFO'
-         },
         'operation_logger': {
              'handlers': ['operation_handler'],
              'propagate': False,
