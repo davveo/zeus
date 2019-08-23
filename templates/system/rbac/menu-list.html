@@ -105,6 +105,13 @@ $(function() {
 								},
                                 {
 									data : "is_top",
+                                    render : function(data, type, row, meta) {
+									    if (data) {
+									        return "是"
+                                        } else {
+									        return "否"
+                                        }
+									}
 								},
 
                                 {
