@@ -12,6 +12,7 @@ class OperationLog(models.Model):
         db_table="logs_operationlog"
         app_label="logs"
 
+    request_id = models.CharField(max_length=255, verbose_name=u'请求ID', unique=True)
     action_time = models.DateTimeField(null=False, db_index=True, auto_now_add=True, verbose_name="动作发生的时间")
     user_id = models.CharField(null=False, verbose_name="产生动作的用户", max_length=255)
     message = models.TextField(null=True, blank=True, verbose_name="动作详情描述")

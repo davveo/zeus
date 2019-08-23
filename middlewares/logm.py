@@ -6,6 +6,7 @@
 import time
 import json
 import datetime
+from django.conf import settings
 from django.utils.deprecation import MiddlewareMixin
 from apps.logs.tasks import operation_log_record, exception_log_record
 from libs.exception_info import get_exception_info, get_func_args
@@ -41,6 +42,7 @@ class LoggingMiddleware(MiddlewareMixin):
                 items = ''
 
             record_data = {
+                "request_id": "",
                 "user_id": current_user.id,
                 "timestamp": datetime.datetime.fromtimestamp(
                             request.start_time
@@ -51,7 +53,12 @@ class LoggingMiddleware(MiddlewareMixin):
                 "actions": items
 
             }
-            operation_log_record.delay(record_data)
+            if settings.DEBUG:
+                print(record_data)
+
+            if request.method == "POST":
+                operation_log_record.delay(record_data)
+
             return response
 
         def process_exception(self, request, exception):

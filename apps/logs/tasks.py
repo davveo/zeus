@@ -7,6 +7,7 @@ import json
 import logging
 from celery import shared_task
 from .models import OperationLog
+from utils.gen_id import IDGenerator
 
 exception_logger = logging.getLogger('exception_logger')
 operation_logger = logging.getLogger('operation_logger')
@@ -22,6 +23,20 @@ def operation_log_record(data):
     operation_logger.info(json.dumps(data, ensure_ascii=True))
 
     # 操作入库
+
+    OperationLog.objects.get_or_create(
+
+    )
+
+    while True:
+        try:
+            generator = IDGenerator()
+            request_id = generator.generate().encode('hex').upper()
+            OperationLog.objects.create(
+            )
+            break
+        except Exception:
+            pass
 
 
 
