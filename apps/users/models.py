@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from enums.user import BACK_TYPE, USER_STATUS
 from rbac.models import Role
 
 
@@ -55,20 +55,26 @@ class User(models.Model):
     class Meta:
         pass
 
-    STATUS_CHOICE = (
-        (1, "正常"),
-        (2, "冻结"),
-    )
 
-    account_name = models.CharField('账号', max_length=255, unique=True)
-    username = models.CharField('姓名', max_length=255)
-    recommend_user = models.CharField('推荐人', max_length=255)
-    is_active = models.BooleanField('是否激活', default=False)
-    status = models.IntegerField('状态', choices=STATUS_CHOICE)
+
+
+
+
+    username = models.CharField('用户名', max_length=255, default='')
+    recommend_user_phone = models.CharField('推荐人手机号', max_length=255, default='')
+    phone = models.CharField("手机号", max_length=255, unique=True)
+    status = models.IntegerField('状态', choices=USER_STATUS, default=USER_STATUS.FREEZE)
     login_password = models.CharField('登陆密码', max_length=255)
     safe_password = models.CharField("安全密码", max_length=255)
-    phone = models.CharField("手机号", max_length=255)
     static_money = models.FloatField("静态钱包", default=0)
     dynamic_money = models.FloatField("动态钱包", default=0)
+    wechat = models.CharField('微信', max_length=255, default='')
+    alipay = models.CharField('支付宝', max_length=255, default='')
+    register_time = models.DateTimeField("注册时间", auto_now_add=True)
+    is_active = models.BooleanField('是否激活', default=False)
+    active_code = models.IntegerField('激活码', default=0)
+    money_for_arrange = models.IntegerField('排单币', default=0)
+    bank_no = models.CharField('银行卡号', max_length=255, default='')
+    bank_type = models.CharField('卡号类型', max_length=255, choices=BACK_TYPE, default=BACK_TYPE.GONGSHANG)
 
 
