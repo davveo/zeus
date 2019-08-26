@@ -19,24 +19,25 @@ def operation_log_record(data):
     :param data:
     :return:
     """
-    # 记录日志
-    operation_logger.info(json.dumps(data, ensure_ascii=True))
-
     # 操作入库
-
-    OperationLog.objects.get_or_create(
-
-    )
-
+    generator = IDGenerator()
     while True:
         try:
-            generator = IDGenerator()
-            request_id = generator.generate().encode('hex').upper()
+            request_id = generator.generate_id(id_length=12)
             OperationLog.objects.create(
+                request_id=request_id,
+                user_id=data['user_id'],
+                message=data['message'],
+                module=data['module'],
+                action=data['action']
             )
             break
-        except Exception:
+        except Exception as e:
             pass
+
+    # 记录日志
+    data.update({'request_id': request_id})
+    operation_logger.info(json.dumps(json.dumps(data), ensure_ascii=True))
 
 
 

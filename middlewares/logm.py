@@ -42,7 +42,6 @@ class LoggingMiddleware(MiddlewareMixin):
                 items = ''
 
             record_data = {
-                "request_id": "",
                 "user_id": current_user.id,
                 "timestamp": datetime.datetime.fromtimestamp(
                             request.start_time
@@ -50,7 +49,9 @@ class LoggingMiddleware(MiddlewareMixin):
                 "request_method": request.method,
                 'path': path,
                 'execute_time': execute_time,
-                "actions": items
+                "message": items,   # 数据
+                "module": '',       # 触发动作模块
+                "action": '',       # 触发什么动作
 
             }
             if settings.DEBUG:
