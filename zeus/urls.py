@@ -24,6 +24,7 @@ from system.views import SystemView
 from adm.views import AdmView
 from personal import views as personal_views
 from personal import views_work_order as order
+from backend.urls import api_urlpatterns
 
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
@@ -68,4 +69,6 @@ urlpatterns = [
     url(r'^personal/document/list', order.WorkOrderDocumentListView.as_view(), name="personal-document-list"),
 
 ]
+
+urlpatterns += api_urlpatterns
 

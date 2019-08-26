@@ -57,8 +57,8 @@ class LoggingMiddleware(MiddlewareMixin):
             if settings.DEBUG:
                 print(record_data)
 
-            if request.method == "POST":
-                operation_log_record.delay(record_data)
+            # if request.method == "POST":
+            #     operation_log_record.delay(record_data)
 
             return response
 

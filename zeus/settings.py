@@ -160,6 +160,7 @@ SAFE_URL = [r'^/$',
             '/index/',
             '/media/',
             '/xadmin/',
+            r'^/api/'
             ]
 
 # session timeout
