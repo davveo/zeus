@@ -57,11 +57,9 @@ docs/_build/
 
 # config
 fabfile.py
-media/
 log/
 crawldata/
 conf/
-/static
 .vagrant/
 Vagrantfile
 
