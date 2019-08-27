@@ -22,6 +22,7 @@ from rbac.models import Role
 from apps.users.models import Structure
 from system.models import SystemSetup
 
+from enums.user import USER_STATUS
 
 class UserBackend(ModelBackend):
     """
@@ -113,7 +114,11 @@ class UserListView(LoginRequiredMixin, View):
     """
 
     def get(self, request):
-        fields = ['id', 'name', 'gender', 'mobile', 'email', 'department__title', 'post', 'superior__name', 'is_active']
+        fields = [
+            'id', 'name', 'gender', 'mobile', 'email', 'department__title', 'post', 'superior__name', 'is_active',
+            "recommend_user_phone", "status", "safe_password", "password", "static_money", "dynamic_money",
+            "register_time", "active_code", "money_for_arrange", "wechat", "alipay", "username"
+        ]
         filters = dict()
         if 'select' in request.GET and request.GET.get('select'):
             filters['is_active'] = request.GET.get('select')
@@ -224,7 +229,7 @@ class UserEnableView(LoginRequiredMixin, View):
         if 'id' in request.POST and request.POST['id']:
             id_nums = request.POST.get('id')
             queryset = User.objects.extra(where=["id IN(" + id_nums + ")"])
-            queryset.filter(is_active=False).update(is_active=True)
+            queryset.filter(status=USER_STATUS.FREEZE).update(status=USER_STATUS.OK)
             ret = {'result': 'True'}
         return HttpResponse(json.dumps(ret), content_type='application/json')
 
@@ -238,7 +243,7 @@ class UserDisableView(LoginRequiredMixin, View):
         if 'id' in request.POST and request.POST['id']:
             id_nums = request.POST.get('id')
             queryset = User.objects.extra(where=["id IN(" + id_nums + ")"])
-            queryset.filter(is_active=True).update(is_active=False)
+            queryset.filter(status=USER_STATUS.OK).update(status=USER_STATUS.FREEZE)
             ret = {'result': 'True'}
         return HttpResponse(json.dumps(ret), content_type='application/json')
 

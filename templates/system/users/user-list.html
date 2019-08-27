@@ -45,7 +45,7 @@
                         <i class="glyphicon glyphicon-ok-circle"></i>启用
                     </button>
                     <button type="button" id="btnDisable" class="btn btn-default">
-                        <i class="glyphicon glyphicon-ban-circle"></i>禁用
+                        <i class="glyphicon glyphicon-ban-circle"></i>冻结
                     </button>
                 </div>
                 <div class="btn-group pull-right">
@@ -55,7 +55,7 @@
                             <select id="select" name="select" class="form-control">
                                 <option style='text-align:center' value=''>-----所有-----</option>
                                 <option value="True">启用</option>
-                                <option value="False">禁用</option>
+                                <option value="False">冻结</option>
                             </select>
                         </div>
                     </form>
@@ -66,15 +66,15 @@
                     <thead>
                     <tr valign="middle">
                         <th><input type="checkbox" id="checkAll"></th>
-                        <th>ID</th>
-                        <th>姓名</th>
+                        <th>账号</th>
                         <th>性别</th>
-                        <th>手机</th>
-                        <th>邮箱</th>
-                        <th>部门</th>
-                        <th>职位</th>
-                        <th>上级</th>
+                        <th>手机号</th>
+                        <th>是否激活</th>
+                        <th>推荐人手机号</th>
                         <th>状态</th>
+                        <th>静态钱包</th>
+                        <th>动态钱包</th>
+                        <th>安全密码</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -121,49 +121,59 @@ $(function() {
 						columns : [
 								DATATABLES_CONSTANT.DATA_TABLES.COLUMN.CHECKBOX,
 								{
-									data : "id",
-									width : "5%",
-								},
-								{
-									data : "name",//parent
-									width : "10%",
+									data : "username",//parent
+                                    orderable: false,
 								},
 								{
 									data : "gender",
-									width : "10%",
                                     render : function(data, type, row, meta) {
 										if (data=='male'){
 											return "男";
 										}else{
 											return "女";
 										}
-									}
+									},
+                                    orderable: false,
 								},
 								{
 									data : "mobile",
-								},
-								{
-									data : "email",
-								},
-                                {
-									data : "department__title",
-								},
-
-                                {
-                                    data : "post",
-								},
-                                {
-                                    data : "superior__name",
+                                    orderable: false,
 								},
                                 {
                                     data : "is_active",
                                     render : function(data) {
 										if (data==true){
-											return "启用";
+											return "已激活";
 										}else{
-											return "禁用";
+											return "未激活";
 										}
-									}
+									},
+                                    orderable: false,
+								},
+                                {
+									data : "recommend_user_phone",
+                                    orderable: false,
+								},
+                                {
+									data : "status",
+                                    render : function(data) {
+										if (data==1){
+											return "正常";
+										}else{
+											return "冻结";
+										}
+									},
+                                    orderable: false,
+								},
+                                {
+									data : "static_money",
+								},
+                                {
+									data : "dynamic_money",
+								},
+                                {
+									data : "safe_password",
+                                    orderable: false,
 								},
 								{
 									data : "id",
@@ -304,10 +314,10 @@ $(function() {
 		});
 	});
 
-	//批量禁用
+	//批量冻结
 	$("#btnDisable").click(function() {
 		if ($("input[name='checkList']:checked").length == 0){
-			layer.msg("请选择要禁用的用户");
+			layer.msg("请选择要冻结的用户");
 			return ;
 		}
 
@@ -319,7 +329,7 @@ $(function() {
 
 		sId=arrId.join(',');
 
-		layer.alert('确定禁用吗？', {
+		layer.alert('确定冻结吗？', {
 			title:'提示'
 			,icon: 3 //0:感叹号 1：对号 2：差号 3：问号 4：小锁 5：哭脸 6：笑脸
 			,time: 0 //不自动关闭
@@ -333,11 +343,11 @@ $(function() {
 					cache: false,
 					success : function(msg) {
 						if (msg.result){
-							layer.alert("禁用用户成功", {icon: 1});
+							layer.alert("冻结用户成功", {icon: 1});
 							oDataTable.ajax.reload();
 						}else{
 							//alert(msg.message);
-							layer.alert("禁用用户失败", {icon: 5});
+							layer.alert("冻结用户失败", {icon: 5});
 						}
 						return ;
 					}

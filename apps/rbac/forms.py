@@ -18,4 +18,6 @@ class MenuForm(forms.ModelForm):
             self.cleaned_data['url'] = url
         if not position:
             self.cleaned_data['position'] = 0
+        else:
+            self.cleaned_data['position'] = position
         return self.cleaned_data

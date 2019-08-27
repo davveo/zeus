@@ -78,7 +78,7 @@ class LoggingMiddleware(MiddlewareMixin):
                         'func_args': func_args,
                         'timestamp': datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S+08:00'),
                     }
-                    , ensure_ascii=True, encoding='utf-8'
+                    , ensure_ascii=True
                 )
 
             exception_log_record.delay(exception_data)

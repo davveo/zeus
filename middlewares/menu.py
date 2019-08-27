@@ -69,7 +69,11 @@ class MenuMiddleware(MiddlewareMixin):
             if [menu['sub_menu'] for menu in menu_data if menu['url'] in request_url]:
                 reveal_menu = [menu['sub_menu'] for menu in menu_data if menu['url'] in request_url][0]
             else:
-                reveal_menu = None
+                reveal_menu = []
+
+            reveal_menu = sorted(reveal_menu, key=lambda x: x['position'], reverse=True)
+            for _menu in reveal_menu:
+                _menu['sub_menu'] = sorted(_menu.pop("sub_menu", []), key=lambda x: x['position'], reverse=True)
 
             return top_menu, reveal_menu, permission_url_list
         else:
