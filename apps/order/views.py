@@ -4,3 +4,5 @@
 # Date: 2019/8/23
 
 
+def test(request):
+    pass

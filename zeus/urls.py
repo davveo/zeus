@@ -24,7 +24,9 @@ from system.views import SystemView
 from adm.views import AdmView
 from personal import views as personal_views
 from personal import views_work_order as order
+from order.urls import order_url_patterns
 from backend.urls import api_urlpatterns
+
 
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
@@ -71,4 +73,5 @@ urlpatterns = [
 ]
 
 urlpatterns += api_urlpatterns
+urlpatterns += order_url_patterns
 
