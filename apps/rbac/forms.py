@@ -1,6 +1,4 @@
 # -*- coding: UTF-8 -*-
-# __author__ : RobbieHan
-# __data__  : 2017/12/20
 
 from django import forms
 from .models import Menu
@@ -11,3 +9,13 @@ class MenuForm(forms.ModelForm):
         model = Menu
         fields = '__all__'
 
+    position = forms.IntegerField(required=False)
+
+    def clean(self):
+        url = self.cleaned_data.pop('url', None)
+        position = self.cleaned_data.pop('position', 0)
+        if url:
+            self.cleaned_data['url'] = url
+        if not position:
+            self.cleaned_data['position'] = 0
+        return self.cleaned_data

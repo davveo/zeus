@@ -11,6 +11,7 @@ class Menu(models.Model):
     icon = models.CharField(max_length=50, null=True, blank=True, verbose_name="图标")
     code = models.CharField(max_length=50, null=True, blank=True, verbose_name="编码")
     url = models.CharField(max_length=128, unique=True, null=True, blank=True)
+    position = models.IntegerField(default=0, verbose_name="展示位置")
 
     def __str__(self):
         title_list = [self.title]

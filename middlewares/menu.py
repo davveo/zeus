@@ -24,7 +24,8 @@ class MenuMiddleware(MiddlewareMixin):
                                                       'permissions__url',
                                                       'permissions__icon',
                                                       'permissions__code',
-                                                      'permissions__parent').distinct()
+                                                      'permissions__parent',
+                                                      'permissions__position').order_by("-permissions__position").distinct()
             permission_url_list = []
             permission_menu_list = []
 
@@ -38,6 +39,7 @@ class MenuMiddleware(MiddlewareMixin):
                         'icon': item['permissions__icon'],
                         'code': item['permissions__code'],
                         'parent': item['permissions__parent'],
+                        'position': item['permissions__position'],
                         'status': False,
                         'sub_menu': [],
 

@@ -54,8 +54,8 @@ class LoggingMiddleware(MiddlewareMixin):
                 "action": '',       # 触发什么动作
 
             }
-            if settings.DEBUG:
-                print(record_data)
+            # if settings.DEBUG:
+            #     print(record_data)
 
             # if request.method == "POST":
             #     operation_log_record.delay(record_data)
