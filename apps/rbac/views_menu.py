@@ -46,7 +46,6 @@ class MenuListDetailView(LoginRequiredMixin, View):
             menu = get_object_or_404(Menu, pk=request.GET.get('id'))
             ret['menu'] = menu
         menu_list = Menu.objects.exclude(id=request.GET.get('id'))
-        print(menu_list)
         ret['menu_list'] = menu_list
         return render(request, 'system/rbac/menu_detail.html', ret)
 
